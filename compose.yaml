@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  chainlit:
+    build: .
+    ports:
+      - "8001:8000"
+      - "11435:11434"
