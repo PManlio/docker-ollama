@@ -15,6 +15,6 @@ done
 # pull llama 3.2 vision model
 ollama pull llama3.2-vision
 
-chainlit run app.py -w
+python3 -m chainlit run app.py -w -h --port 8000 --host 0.0.0.0
 
 exec "$@"
