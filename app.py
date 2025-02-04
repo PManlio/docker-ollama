@@ -27,6 +27,7 @@ async def tool(input_message, image=None):
 
     interaction = cl.user_session.get("interaction")
 
+    # requires llama3.2-vision model; changed to llama3.2 for text only
     if image:
         interaction.append({"role": "user",
                             "content": input_message,
