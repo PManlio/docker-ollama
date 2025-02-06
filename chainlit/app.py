@@ -1,6 +1,9 @@
 import chainlit as cl
 import ollama
 
+# TODO: change this with .env variables
+client = ollama.Client(host='http://ollama_service:11434')
+
 @cl.on_chat_start
 async def start_chat():
     cl.user_session.set(
@@ -15,7 +18,7 @@ async def start_chat():
 
     msg = cl.Message(content="")
 
-    start_message = "Hello, I'm your 100% local alternative to ChatGPT running on Llama3.2-Vision. How can I help you today?"
+    start_message = "Hello, I'm your 100% local alternative to ChatGPT running on Llama3.2. How can I help you today?"
 
     for token in start_message:
         await msg.stream_token(token)
@@ -38,7 +41,7 @@ async def tool(input_message, image=None):
     
     # response = ollama.chat(model="llama3.2-vision",
     #                       messages=interaction) 
-    response = ollama.chat(model="llama3.2",
+    response = client.chat(model="llama3.2",
                            messages=interaction)
     
     interaction.append({"role": "assistant",

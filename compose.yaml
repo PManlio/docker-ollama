@@ -1,9 +1,31 @@
 version: '3.8'
 
 services:
-  chainlit:
-    build: .
+  ollama_service:
+    build:
+      context: ./ollama
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - "8001:8000"
       - "11435:11434"
+
+  ollama_lient:
+    build:
+      context: ./ollamaModelClient
+      dockerfile: Dockerfile
+    depends_on:
+      ollama_service:
+        condition: service_started
+
+  chainlit_service:
+    restart: always
+    ports:
+      - "8000:8000"
+    build:
+      context: ./chainlit
+      dockerfile: Dockerfile
+    volumes:
+      - ./chainlit/:/app
+    depends_on:
+      ollama_service:
+        condition: service_started
